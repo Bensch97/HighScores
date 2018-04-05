@@ -6,6 +6,7 @@ const http = require('http');
 
 const hostname = '127.0.0.1';
 const port = 3000;
+var topThree = scores;
 
 const server = http.createServer((req, res) => {
     var body;
@@ -15,7 +16,7 @@ const server = http.createServer((req, res) => {
         } else {
             res.statusCode = 200;
             res.setHeader("content-type", "application/json")
-            body = scores;
+            body = topThree;
         }
     } else if (req.method === "POST") {
         res.statusCode = 201;
@@ -25,8 +26,7 @@ const server = http.createServer((req, res) => {
                 return a.score - b.score
             })
             sorted.reverse();
-            var topThree = [];
-            topThree.push(sorted[0, 1, 2])
+            topThree = sorted.slice(0,3)
             body = topThree;
         })
     }
